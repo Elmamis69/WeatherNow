@@ -40,15 +40,25 @@ WeatherNow allows users to:
 ## 🧩 Project Structure
 
 WeatherNow/
+
 ├── Models/
+
 │ └── WeatherData.swift
+
 ├── ViewModels/
+
 │ └── WeatherViewModel.swift
+
 ├── Views/
+
 │ ├── HomeView.swift
+
 │ └── CitySearchView.swift
+
 ├── Services/
+
 │ └── WeatherService.swift
+
 └── WeatherNowApp.swift
 
 
@@ -83,19 +93,30 @@ Build and run the app on the simulator or device
 - [x]  Write README and publish on GitHub
 
 💡 Future Enhancements (Phase 2+)
+
 📍 Location-based weather using CoreLocation
+
 📅 5-day forecast view
+
 📊 Charts for temperature trends
+
 🌩️ Weather alerts and notifications
+
 ☁️ Optional iCloud sync for favorites
 
 **Author**
+
 Adrián Félix
+
 Software Engineering
+
 Passionate about iOS development and clean architecture.
 
+
 GitHub: @Elmamis69
+
 Email: guerofelix234@gmail.com
 
 **License**
+
 This project is licensed under the MIT License.
