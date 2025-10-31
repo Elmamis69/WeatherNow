@@ -79,8 +79,8 @@ let apiKey = "YOUR_API_KEY_HERE"
 Build and run the app on the simulator or device
 
 ## 🧱Roadmap
-- [ ]  Create base SwiftUI project structure
-- [ ]  Design main HomeView layout
+- [x]  Create base SwiftUI project structure
+- [x]  Design main HomeView layout
 - [ ]  Implement WeatherService for API calls
 - [ ]  Decode JSON response from OpenWeatherMap
 - [ ]  Display weather data on screen
