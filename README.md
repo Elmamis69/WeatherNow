@@ -104,7 +104,7 @@ Build and run the app on the simulator or device
 
 ☁️ Optional iCloud sync for favorites
 
-**Author**
+## Author
 
 Adrián Félix
 
