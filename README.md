@@ -81,11 +81,11 @@ Build and run the app on the simulator or device
 ## 🧱Roadmap
 - [x]  Create base SwiftUI project structure
 - [x]  Design main HomeView layout
-- [ ]  Implement WeatherService for API calls
-- [ ]  Decode JSON response from OpenWeatherMap
-- [ ]  Display weather data on screen
-- [ ]  Add search by city feature
-- [ ]  Handle loading/error states
+- [x]  Implement WeatherService for API calls
+- [x]  Decode JSON response from OpenWeatherMap
+- [x]  Display weather data on screen
+- [x]  Add search by city feature
+- [x]  Handle loading/error states
 - [ ]  Add temperature unit conversion (°C/°F)
 - [ ]  Implement location-based weather
 - [ ]  Add icons and dynamic backgrounds
