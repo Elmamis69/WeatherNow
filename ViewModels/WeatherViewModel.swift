@@ -14,8 +14,10 @@ class WeatherViewModel: ObservableObject {
 
     func fetchWeather() async {
         guard !city.isEmpty else { return }
-        isLoading = true; errorMessage = ""
-
+            isLoading = true;
+            errorMessage = ""
+        defer { isLoading = false}
+        
         do {
             let data = try await service.fetchWeather(for: city)
             temperature = String(format: "%.0f", data.main.temp)

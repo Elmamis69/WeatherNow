@@ -23,23 +23,26 @@ struct HomeView: View {
                 Button {
                     Task { await vm.fetchWeather() }
                 } label: {
-                    Text("Search")
+                    Text(vm.isLoading ? "Searching..." : "Search")
                         .fontWeight(.semibold)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 10)
                         .background(.ultraThinMaterial)
                         .cornerRadius(12)
                 }
+                .disabled(vm.isLoading)
                 .padding(.bottom, 10)
-                if vm.isLoading { ProgressView().tint(.white) }
+                if vm.isLoading {
+                    ProgressView().tint(.white)
+                }
 
                 if !vm.errorMessage.isEmpty {
                     Text(vm.errorMessage)
                         .font(.callout).bold()
                         .foregroundColor(.white)
                         .padding(8)
-                        .background(.red.opacity(0.4))
-                        .cornerRadius(8)
+                        .background(.red.opacity(0.45))
+                        .cornerRadius(10)
                 }
 
                 
