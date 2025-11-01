@@ -86,7 +86,7 @@ Build and run the app on the simulator or device
 - [x]  Display weather data on screen
 - [x]  Add search by city feature
 - [x]  Handle loading/error states
-- [ ]  Add temperature unit conversion (°C/°F)
+- [x]  Add temperature unit conversion (°C/°F)
 - [ ]  Implement location-based weather
 - [ ]  Add icons and dynamic backgrounds
 - [ ]  Polish UI + animations

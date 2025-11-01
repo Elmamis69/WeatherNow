@@ -2,24 +2,40 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var vm = WeatherViewModel()
-    
+    @AppStorage("useCelsius") private var useCelsius = true
+
+    // Temperatura formateada según unidad
+    private var valueText: String {
+        guard let c = vm.tempC else { return "--" }
+        let v = useCelsius ? c : (c * 9/5 + 32)
+        return String(format: "%.0f", v)
+    }
+
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.blue.opacity(0.6), .cyan.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: [.blue.opacity(0.6), .cyan.opacity(0.4)],
+                           startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
-            
-            VStack (spacing: 16){
+
+            VStack(spacing: 16) {
                 Text("🌤️ WeatherNow")
                     .font(.largeTitle).bold()
                     .foregroundColor(.white)
                     .padding(.top, 60)
-                    
+
                 TextField("Enter city name", text: $vm.city)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
-                
+
+                Picker("Units", selection: $useCelsius) {
+                    Text("°C").tag(true)
+                    Text("°F").tag(false)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+
                 Button {
                     Task { await vm.fetchWeather() }
                 } label: {
@@ -32,9 +48,8 @@ struct HomeView: View {
                 }
                 .disabled(vm.isLoading)
                 .padding(.bottom, 10)
-                if vm.isLoading {
-                    ProgressView().tint(.white)
-                }
+
+                if vm.isLoading { ProgressView().tint(.white) }
 
                 if !vm.errorMessage.isEmpty {
                     Text(vm.errorMessage)
@@ -45,21 +60,21 @@ struct HomeView: View {
                         .cornerRadius(10)
                 }
 
-                
+                // Bloque de datos
                 VStack(spacing: 10) {
                     Image(systemName: vm.iconName)
                         .font(.system(size: 80))
                         .foregroundColor(.white)
-                    
-                    Text("\(vm.temperature)°C")
+
+                    Text("\(valueText)°\(useCelsius ? "C" : "F")")
                         .font(.system(size: 60, weight: .medium))
                         .foregroundColor(.white)
-                    
+
                     Text(vm.description.capitalized)
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.9))
                 }
-                
+
                 Spacer()
             }
             .padding()

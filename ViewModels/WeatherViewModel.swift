@@ -1,34 +1,33 @@
 import SwiftUI
-internal import Combine
+import Combine
 
 @MainActor
 class WeatherViewModel: ObservableObject {
     @Published var city = ""
-    @Published var temperature = "--"
     @Published var description = ""
     @Published var iconName = "cloud"
     @Published var isLoading = false
     @Published var errorMessage = ""
+    @Published var tempC: Double? = nil   // usamos esta para mostrar °C/°F
 
     private let service = WeatherService()
 
     func fetchWeather() async {
         guard !city.isEmpty else { return }
-            isLoading = true;
-            errorMessage = ""
-        defer { isLoading = false}
-        
+        isLoading = true
+        errorMessage = ""
+        defer { isLoading = false }
+
         do {
             let data = try await service.fetchWeather(for: city)
-            temperature = String(format: "%.0f", data.main.temp)
-            description  = data.weather.first?.description ?? ""
-            iconName     = mapIcon(data.weather.first?.icon ?? "")
+            tempC = data.main.temp                      // ← aquí
+            description = data.weather.first?.description ?? ""
+            iconName = mapIcon(data.weather.first?.icon ?? "")
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? "Unknown error"
         }
-        isLoading = false
     }
-    
+
     private func mapIcon(_ code: String) -> String {
         switch code {
         case "01d": return "sun.max.fill"
