@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0DB47C202EB4606C00879922 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0DB47C1F2EB4606C00879922 /* README.md */; };
 		0DB47C262EB48F1200879922 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB47C252EB464F800879922 /* HomeView.swift */; };
+		0DB47C2A2EB4967300879922 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB47C292EB4967000879922 /* WeatherViewModel.swift */; };
+		0DB47C2B2EB4999C00879922 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB47C272EB4910D00879922 /* WeatherService.swift */; };
+		0DB47C2C2EB49BF700879922 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB47C282EB4924D00879922 /* WeatherData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,7 @@
 		0DB47C252EB464F800879922 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0DB47C272EB4910D00879922 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		0DB47C282EB4924D00879922 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		0DB47C292EB4967000879922 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -117,6 +121,7 @@
 		0DB47C222EB464DC00879922 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0DB47C292EB4967000879922 /* WeatherViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -282,7 +287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DB47C2A2EB4967300879922 /* WeatherViewModel.swift in Sources */,
 				0DB47C262EB48F1200879922 /* HomeView.swift in Sources */,
+				0DB47C2C2EB49BF700879922 /* WeatherData.swift in Sources */,
+				0DB47C2B2EB4999C00879922 /* WeatherService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

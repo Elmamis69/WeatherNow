@@ -1,10 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var city: String = ""
-    @State private var temperature: String = "--"
-    @State private var description: String = "Loading..."
-    @State private var iconName: String = "cloud.sun.fill"
+    @StateObject private var vm = WeatherViewModel()
     
     var body: some View {
         ZStack {
@@ -17,33 +14,45 @@ struct HomeView: View {
                     .foregroundColor(.white)
                     .padding(.top, 60)
                     
-                TextField("Enter city name", text: $city)
+                TextField("Enter city name", text: $vm.city)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                 
-                Button(action: {
-                }) {
+                Button {
+                    Task { await vm.fetchWeather() }
+                } label: {
                     Text("Search")
                         .fontWeight(.semibold)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 10)
                         .background(.ultraThinMaterial)
                         .cornerRadius(12)
-                    }
+                }
                 .padding(.bottom, 10)
+                if vm.isLoading { ProgressView().tint(.white) }
+
+                if !vm.errorMessage.isEmpty {
+                    Text(vm.errorMessage)
+                        .font(.callout).bold()
+                        .foregroundColor(.white)
+                        .padding(8)
+                        .background(.red.opacity(0.4))
+                        .cornerRadius(8)
+                }
+
                 
                 VStack(spacing: 10) {
-                    Image(systemName: iconName)
+                    Image(systemName: vm.iconName)
                         .font(.system(size: 80))
                         .foregroundColor(.white)
                     
-                    Text("\(temperature)°C")
+                    Text("\(vm.temperature)°C")
                         .font(.system(size: 60, weight: .medium))
                         .foregroundColor(.white)
                     
-                    Text(description.capitalized)
+                    Text(vm.description.capitalized)
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.9))
                 }
