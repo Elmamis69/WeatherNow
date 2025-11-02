@@ -4,6 +4,7 @@ struct HomeView: View {
     @StateObject private var vm = WeatherViewModel()
     @AppStorage("useCelsius") private var useCelsius = true
 
+    // Temperatura principal formateada según unidad
     private var valueText: String {
         guard let c = vm.tempC else { return "--" }
         let v = useCelsius ? c : (c * 9/5 + 32)
@@ -84,6 +85,7 @@ struct HomeView: View {
                             .cornerRadius(10)
                     }
 
+                    // Card datos actuales
                     VStack(spacing: 10) {
                         Image(systemName: vm.iconName)
                             .font(.system(size: 84, weight: .regular))
@@ -102,6 +104,36 @@ struct HomeView: View {
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .shadow(color: .black.opacity(0.15), radius: 12, y: 6)
 
+                    // ------- Forecast 5 días -------
+                    if !vm.forecast.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("5-Day Forecast")
+                                .font(.headline).foregroundColor(.white.opacity(0.95))
+                                .padding(.horizontal)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 12) {
+                                    ForEach(vm.forecast) { day in
+                                        let temp = useCelsius ? day.avgTempC
+                                                              : (day.avgTempC * 9/5 + 32)
+                                        VStack(spacing: 8) {
+                                            Text(weekday(from: day.date))
+                                                .font(.caption).foregroundColor(.white.opacity(0.9))
+                                            Image(systemName: vmIcon(from: day.icon))
+                                                .font(.title2).foregroundColor(.white)
+                                            Text("\(Int(temp.rounded()))°\(useCelsius ? "C" : "F")")
+                                                .font(.headline).foregroundColor(.white)
+                                        }
+                                        .padding(.vertical, 12).padding(.horizontal, 14)
+                                        .background(.ultraThinMaterial,
+                                                    in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+
                     Spacer(minLength: 24)
                 }
                 .padding()
@@ -111,6 +143,25 @@ struct HomeView: View {
             }
         }
         .onTapGesture { UIApplication.shared.hideKeyboard() }
+    }
+
+    // MARK: - Helpers (HomeView)
+    private func weekday(from date: Date) -> String {
+        let f = DateFormatter(); f.locale = .current; f.dateFormat = "EEE"
+        return f.string(from: date)
+    }
+    private func vmIcon(from code: String) -> String {
+        switch code {
+        case "01d": return "sun.max.fill"
+        case "01n": return "moon.fill"
+        case "02d","02n": return "cloud.sun.fill"
+        case "03d","03n": return "cloud.fill"
+        case "09d","09n": return "cloud.drizzle.fill"
+        case "10d","10n": return "cloud.rain.fill"
+        case "11d","11n": return "cloud.bolt.rain.fill"
+        case "13d","13n": return "snowflake"
+        default: return "cloud.fill"
+        }
     }
 }
 

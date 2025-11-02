@@ -44,4 +44,25 @@ struct WeatherService {
         }
         return try JSONDecoder().decode(WeatherData.self, from: data)
     }
+    
+    func fetchForecast(for city: String) async throws -> ForecastResponse {
+        let encoded = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? city
+        guard let url = URL(string:
+                "https://api.openweathermap.org/data/2.5/forecast?q=\(encoded)&appid=\(apiKey)&units=metric"
+            ) else { throw URLError(.badURL) }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw WeatherError.server }
+        return try JSONDecoder().decode(ForecastResponse.self, from: data)
+    }
+    
+    func fetchForecast(lat: Double, lon: Double) async throws -> ForecastResponse {
+        guard let url = URL(string:
+                                "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric"
+        ) else { throw URLError(.badURL) }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw WeatherError.server }
+        return try JSONDecoder().decode(ForecastResponse.self, from: data)
+    }
 }
