@@ -30,4 +30,18 @@ struct WeatherService {
         }
         return try JSONDecoder().decode(WeatherData.self, from: data)
     }
+    func fetchWeather(lat: Double, lon: Double) async throws -> WeatherData {
+        guard let url = URL(string: "\(baseURL)?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric") else {
+            throw URLError(.badURL)
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+        if code != 200 {
+            if code == 401 { throw WeatherError.unauthorized }
+            if code == 404 { throw WeatherError.invalidCity }
+            throw WeatherError.server
+        }
+        return try JSONDecoder().decode(WeatherData.self, from: data)
+    }
 }

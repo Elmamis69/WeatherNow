@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+internal import _LocationEssentials
 
 @MainActor
 class WeatherViewModel: ObservableObject {
@@ -11,6 +12,7 @@ class WeatherViewModel: ObservableObject {
     @Published var tempC: Double? = nil   // usamos esta para mostrar °C/°F
 
     private let service = WeatherService()
+    private let locator = LocationManager()
 
     func fetchWeather() async {
         guard !city.isEmpty else { return }
@@ -25,6 +27,21 @@ class WeatherViewModel: ObservableObject {
             iconName = mapIcon(data.weather.first?.icon ?? "")
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? "Unknown error"
+        }
+    }
+    
+    func fetchCurrentLocationWeather() async {
+        isLoading = true; errorMessage = ""
+        defer { isLoading = false}
+        do {
+            let coord = try await locator.requestLocation()
+            let data = try await service.fetchWeather(lat: coord.latitude, lon: coord.longitude)
+            tempC = data.main.temp
+            description = data.weather.first?.description ?? ""
+            iconName = mapIcon(data.weather.first?.icon ?? "")
+            city = data.name
+        } catch {
+            errorMessage = "Location unavailable or denied"
         }
     }
 

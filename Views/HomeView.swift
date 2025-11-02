@@ -59,7 +59,17 @@ struct HomeView: View {
                         .background(.red.opacity(0.45))
                         .cornerRadius(10)
                 }
-
+                
+                Button {
+                    Task { await vm.fetchCurrentLocationWeather()}
+                } label : {
+                    Text("Use my location")
+                        .font(.subheadline).bold()
+                        .padding(.horizontal, 24).padding(.vertical, 8)
+                        .background(.ultraThinMaterial).cornerRadius(10)
+                }
+                .disabled(vm.isLoading)
+                
                 // Bloque de datos
                 VStack(spacing: 10) {
                     Image(systemName: vm.iconName)
