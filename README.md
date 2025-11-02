@@ -88,7 +88,7 @@ Build and run the app on the simulator or device
 - [x]  Handle loading/error states
 - [x]  Add temperature unit conversion (°C/°F)
 - [x]  Implement location-based weather
-- [ ]  Add icons and dynamic backgrounds
+- [x]  Add icons and dynamic backgrounds
 - [ ]  Polish UI + animations
 - [x]  Write README and publish on GitHub
 
