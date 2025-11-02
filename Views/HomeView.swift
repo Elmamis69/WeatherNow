@@ -13,9 +13,12 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.blue.opacity(0.6), .cyan.opacity(0.4)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: vm.background,
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
                 .ignoresSafeArea()
+                .animation(.easeInOut(duration: 0.6), value: vm.background)
+
 
             VStack(spacing: 16) {
                 Text("🌤️ WeatherNow")
@@ -73,17 +76,15 @@ struct HomeView: View {
                 // Bloque de datos
                 VStack(spacing: 10) {
                     Image(systemName: vm.iconName)
-                        .font(.system(size: 80))
-                        .foregroundColor(.white)
-
+                        .font(.system(size: 80, weight: .regular))
                     Text("\(valueText)°\(useCelsius ? "C" : "F")")
-                        .font(.system(size: 60, weight: .medium))
-                        .foregroundColor(.white)
-
+                        .font(.system(size: 64, weight: .semibold))
                     Text(vm.description.capitalized)
-                        .font(.title3)
-                        .foregroundColor(.white.opacity(0.9))
+                        .font(.headline).opacity(0.9)
                 }
+                .padding(.vertical, 20)
+                .padding(.horizontal, 24)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
 
                 Spacer()
             }
