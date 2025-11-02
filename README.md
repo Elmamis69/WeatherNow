@@ -87,7 +87,7 @@ Build and run the app on the simulator or device
 - [x]  Add search by city feature
 - [x]  Handle loading/error states
 - [x]  Add temperature unit conversion (°C/°F)
-- [ ]  Implement location-based weather
+- [x]  Implement location-based weather
 - [ ]  Add icons and dynamic backgrounds
 - [ ]  Polish UI + animations
 - [x]  Write README and publish on GitHub
